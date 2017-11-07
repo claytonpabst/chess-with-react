@@ -2,6 +2,19 @@
 .home{
     width: 100%;
     position: relative;
+    background: #aaa;
+}
+.gameBoardWrapper{
+    margin: 0 auto;
+    height: 820px;
+    width: 810px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 5px solid black;
+}
+.singleTile{
+    width: 100px;
+    height: 100px;
 }
 
 
