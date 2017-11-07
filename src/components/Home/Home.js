@@ -20,23 +20,49 @@ class Home extends Component {
         } else {
           color = 'white';
         }
-        let obj = {row:i,col:j,color:color,outOfBounds:outOfBounds,}
+        let obj = {row:i,col:j,color:color,outOfBounds:outOfBounds,piece:null}
         startingBoard.push(obj)
       }
     }
 
     this.state = {
       board: startingBoard,
-      PIECES: {empty:0,wP:1,wN:2,wB:3,wR:4,wQ:5,wK:6,bP:7,bN:8,bB:9,bR:10,bQ:11,bK:12},
+      PIECES: {
+        e:{num:0,val:0,   small:false,big:false,major:false, name:''},
+        wP:{num:1,val:100,    small:true, big:false,major:false, name:'wP'},
+        wN:{num:2,val:325,    small:false,big:true, major:false, name:'wN'},
+        wB:{num:3,val:325,    small:true, big:false,major:false, name:'wB'},
+        wR:{num:4,val:550,    small:false,big:true, major:false, name:'wR'},
+        wQ:{num:5,val:1000,   small:false,big:false,major:true, name:'wQ'},
+        wK:{num:6,val:50000,  small:false,big:false,major:true, name:'wK'},
+        bP:{num:7,val:100,    small:true, big:false,major:false, name:'bP'},
+        bN:{num:8,val:325,    small:false,big:true, major:false, name:'bN'},
+        bB:{num:9,val:325,    small:false,big:true, major:false, name:'bB'},
+        bR:{num:10,val:550,   small:false,big:true, major:false, name:'bR'},
+        bQ:{num:11,val:1000,  small:false,big:false,major:true, name:'bQ'},
+        bK:{num:12,val:50000, small:false,big:false,major:true, name:'bK'},
+      },
       fiftyMove: 0,
       castle: {wQ:true,wK:true,bQ:true,bK:true},
-
     }
     this.isEven = this.isEven.bind(this);
+    this.startNewGame = this.startNewGame.bind(this);
   }
 
   isEven(num){
     return num%2 === 0;
+  }
+  startNewGame(){
+    let x = this.state.PIECES;
+    let startingBoardPieces = [ [x.bR,x.bN,x.bB,x.bQ,x.bK,x.bB,x.bN,x.bR],
+                                [x.bP,x.bP,x.bP,x.bP,x.bP,x.bP,x.bP,x.bP],
+                                [x.e, x.e, x.e, x.e, x.e, x.e, x.e, x.e,],
+                                [x.e, x.e, x.e, x.e, x.e, x.e, x.e, x.e,],
+                                [x.e, x.e, x.e, x.e, x.e, x.e, x.e, x.e,],
+                                [x.e, x.e, x.e, x.e, x.e, x.e, x.e, x.e,],
+                                [x.wP,x.wP,x.wP,x.wP,x.wP,x.wP,x.wP,x.wP],
+                                [x.wR,x.wN,x.wB,x.wK,x.wQ,x.wB,x.wN,x.wR]]
+
   }
 
   render() {
@@ -56,7 +82,8 @@ class Home extends Component {
       <div className="home">
         <section className='gameBoardWrapper'>
           {board}
-        </section>  
+        </section>
+        <button onClick={this.startNewGame}>Start New Game</button>
       </div>
     );
   }
