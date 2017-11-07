@@ -20,19 +20,17 @@ class Home extends Component {
         } else {
           color = 'white';
         }
-        let obj = {
-          row:i,
-          col:j,
-          color:color,
-          outOfBounds: outOfBounds,
-
-        }
+        let obj = {row:i,col:j,color:color,outOfBounds:outOfBounds,}
         startingBoard.push(obj)
       }
     }
 
     this.state = {
-      board: startingBoard
+      board: startingBoard,
+      PIECES: {empty:0,wP:1,wN:2,wB:3,wR:4,wQ:5,wK:6,bP:7,bN:8,bB:9,bR:10,bQ:11,bK:12},
+      fiftyMove: 0,
+      castle: {wQ:true,wK:true,bQ:true,bK:true},
+
     }
     this.isEven = this.isEven.bind(this);
   }
