@@ -8,7 +8,7 @@ class Home extends Component {
   constructor(props){
     super(props);
 
-    let startingBoard =[];
+    let startingBoard =[[],[],[],[],[],[],[],[],[],[],[],[]];
     for(let i = 0; i<12; i++){
       for(let j = 0; j<12; j++){
         let outOfBounds = (i<2 || i>9 || j<2 || j>9) ? true:false;
@@ -20,15 +20,15 @@ class Home extends Component {
         } else {
           color = 'white';
         }
-        let obj = {row:i,col:j,color:color,outOfBounds:outOfBounds,piece:null}
-        startingBoard.push(obj)
+        let obj = {row:i,col:j,color:color,outOfBounds:outOfBounds,piece:{num:0,val:0,small:false,big:false,major:false,name:'empty'}};
+        startingBoard[i].push(obj);
       }
     }
 
     this.state = {
       board: startingBoard,
       PIECES: {
-        e:{num:0,val:0,   small:false,big:false,major:false, name:''},
+        e:{num:0,val:0,   small:false,big:false,major:false, name:'empty'},
         wP:{num:1,val:100,    small:true, big:false,major:false, name:'wP'},
         wN:{num:2,val:325,    small:false,big:true, major:false, name:'wN'},
         wB:{num:3,val:325,    small:true, big:false,major:false, name:'wB'},
@@ -53,6 +53,7 @@ class Home extends Component {
     return num%2 === 0;
   }
   startNewGame(){
+    let board = [... this.state.board];
     let x = this.state.PIECES;
     let startingBoardPieces = [ [x.bR,x.bN,x.bB,x.bQ,x.bK,x.bB,x.bN,x.bR],
                                 [x.bP,x.bP,x.bP,x.bP,x.bP,x.bP,x.bP,x.bP],
@@ -61,23 +62,37 @@ class Home extends Component {
                                 [x.e, x.e, x.e, x.e, x.e, x.e, x.e, x.e,],
                                 [x.e, x.e, x.e, x.e, x.e, x.e, x.e, x.e,],
                                 [x.wP,x.wP,x.wP,x.wP,x.wP,x.wP,x.wP,x.wP],
-                                [x.wR,x.wN,x.wB,x.wK,x.wQ,x.wB,x.wN,x.wR]]
-
+                                [x.wR,x.wN,x.wB,x.wK,x.wQ,x.wB,x.wN,x.wR]];
+    for(let i=0; i<12; i++){
+      for(let j=0; j<12; j++){
+        console.log(board[0])
+        if(!board[i][j].outOfBounds){
+          console.log('hit')
+          // board.piece = startingBoardPieces[i][j];
+        }
+      }
+    }
+    this.setState({
+      board:board
+    })
   }
 
   render() {
 
-    let board = this.state.board.map((tile, i) => {
-      let color = {"background":tile.color}
-      if(!tile.outOfBounds){
-        return (
-          <div style={color} className='singleTile' key={i}>
-            
-          </div>
-        )
-      }
+    let board = this.state.board.map((row, i) => {
+      row.map((tile, j) =>{
+        let defaultName = 'That Was Silly';
+        let color = {"background":tile.color}
+        if(!tile.outOfBounds){
+          return (
+            <div style={color} className='singleTile' key={j}>
+              {tile.piece.name?tile.piece.name:defaultName}
+            </div>
+          )
+        }
+      })
     })
-    
+
     return (
       <div className="home">
         <section className='gameBoardWrapper'>
