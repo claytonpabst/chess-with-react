@@ -80,7 +80,9 @@ class Home extends Component {
   render() {
 
     let board = this.state.board.map((row, i) => {
+      console.log(row)
       row.map((tile, j) =>{
+        console.log(tile)
         let defaultName = 'That Was Silly';
         let color = {"background":tile.color}
         if(!tile.outOfBounds){
